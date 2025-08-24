@@ -1,0 +1,217 @@
+{
+  "name": "My workflow 8",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        0,
+        0
+      ],
+      "id": "73f08981-703d-4bef-9905-9247d9738ae1",
+      "name": "When chat message received",
+      "webhookId": "1cc94f03-91fc-4ccc-aa2b-f80a324971c5"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        208,
+        0
+      ],
+      "id": "061da483-3cf8-49e1-a1cb-38c42e43797f",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        80,
+        208
+      ],
+      "id": "e17d0b2c-c99d-46cb-ace9-1d51ef6c6b21",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "ScdCcAjQSlbUBIYq",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        224,
+        208
+      ],
+      "id": "c745fe04-84e5-45db-b725-3015ed322083",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1eQGicsWiOs9DAo2njH7xzHGCas6lMVJ2TorhnRyfPLw/edit?gid=0#gid=0",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "tracker",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1eQGicsWiOs9DAo2njH7xzHGCas6lMVJ2TorhnRyfPLw/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "expense": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('expense', ``, 'string') }}",
+            "charge date": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('charge_date', ``, 'string') }}",
+            "cadence ": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('cadence_', ``, 'string') }}",
+            "cost": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('cost', ``, 'string') }}",
+            "status": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('status', ``, 'string') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "expense",
+              "displayName": "expense",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "charge date",
+              "displayName": "charge date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "cadence ",
+              "displayName": "cadence ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "cost",
+              "displayName": "cost",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.7,
+      "position": [
+        432,
+        176
+      ],
+      "id": "905597a4-38f0-4471-8a74-1e51059a60f0",
+      "name": "AddEntry",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "X2711ujs3nmqXNfj",
+          "name": "Google Sheets account 2"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AddEntry": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "d222f5f9-6ca3-4a8d-b940-ecfe6c7ff448",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "28ceff4f33b19480463abc0b58652aa3c81935b7007bef5f428271994d992cbd"
+  },
+  "id": "7EwrtaRjQH1PhoDt",
+  "tags": []
+}
